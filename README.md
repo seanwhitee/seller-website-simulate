@@ -1,75 +1,105 @@
 # seller-website-simulate
-A project use bst and heap data structure to simulate the sellers and buyers' interaction.
 
-Use <strong> binary search tree </strong> to store the sell items, and every item (every tree node) has its own <strong> min heap </strong> point to them in order to store the seller name and price. 
+## Overview
 
-<br>
+A project use __Binary Search Tree__ and __Heap__ data structure to simulate the sellers and buyers' interaction.
 
-# Basic requirements
+Use __Binary Search Tree__  to store the items seller wanted to sell, and every item (every tree node) has its own __Min Heap__ point to them in order to store the seller's name and price.
 
+Note: An item may have multiple seller, and we use the min heap to store those values.
 
-- <h2>Insert</h2>
-    
+## Code Structure
 
-    Insert items and sellers info. Process bst first. If    
-    1. <strong><i>There is such item already exists:</i></strong> Put the seller info into the min heap which belongs to that item.
-    2. <strong><i>There is no such item: </i></strong>Insert item into bst (based on the A-Z order, <strong>not CASE SENSITIVE</strong>), and also put the seller info into the min heap.
+The code consists of three main data structures:
 
-<br>
+1. **SELLER_TYPE**: A structure representing a seller, containing a seller ID (`SID`) and the price of the item (`PRICE`).
 
-- <h2>Search</h2>
+2. **SELLER_HEAP**: A min heap structure storing sellers' information. It includes an array of `SELLER_TYPE` elements, the current size, and the maximum capacity of the heap.
 
-    Search item name. If
-    1. <strong><i>Success:</i></strong> Put all the sellers info in this specific item into the <strong>search table</strong>.
-    2. <strong><i>Failure: </i></strong>Put the search fail info into the <strong>search table</strong>.
+3. **ITEM_TYPE**: A structure representing an item in the BST. It contains the item name (`ITEM_NAME`), a pointer to a min heap of sellers (`heap`), and pointers to left and right child nodes.
 
-<br>
+The code includes functions to perform various operations on these structures, such as initializing a min heap, inserting elements into the heap, getting the minimum element, and deleting the minimum element.
 
-- <h2>Buy</h2> 
+## Operations
 
-    Buy a specific item. First, we have to search bst. If
-    1. <strong><i>There is such item: </i></strong>It is assumed that the buyer considers the price of the product and chooses the product with the lowest price to buy, that is, take out the root of the min heap, and then store the transaction seller information (seller ID, product price) in the buyTable, and Delete the seller's information, and move the seller with the lowest selling price to the root. Assuming that there is no seller in the min heap, delete this item from the binary search tree.
-    2. <strong><i> There is no such item: </i></strong> Put the failure info into the <strong>buy table</strong>.
+The simulation supports the following operations:
 
-<br>
-
-- <h2>Sort</h2>
-
-    Use <strong>inorder traversal</strong> to traverse the bst, and put the items into <strong>sort table</strong>.
+1. **Insert**: Add a new item to the BST with its corresponding seller information in the min heap.
+2. **Search**: Retrieve information about an item, including its name and the sellers with their prices.
+3. **Buy**: Purchase an item, displaying the item name, seller ID, and price. The corresponding seller is removed from the min heap, and if the heap becomes empty, the item is removed from the BST.
+4. **Sort**: Display the items in the BST in sorted order.
+5. **Report**: Generate a report with statistics about the simulation, including the number of insertions, searches, and purchases, the number of nodes in the BST, and the height of the BST.
 
 
-<br>
+## Input
 
-- <h2>Report</h2>
+The program reads input from a file specified by the user. Each line in the file contains a command, and the format of each command shawn as follows.
+```text
+insert CD Mary 280
+insert TV John 20000
+buy Book
+insert Book Jacky08 220
+search CD
+insert Book Jacky01 200
+insert Book GiGi 180
+search Book
+buy Book
+buy Book
+search Notebook
+sort
+buy CD
+sort
+report
+```
 
-    Ouput 4 files: searchTable.txt, buyTable.txt, sortTable.txt, LogTable.txt.
+## Output
 
-<br>
+The simulation produces output in the form of three text files:
 
-# Input format example
+- **SearchTable.txt**: Information about searched items and their sellers.
+```text
+CD
+Mary 280
+----------------------------
+Book
+GiGi 180
+Jacky08 220
+Jacky01 200
+----------------------------
+Notebook doesn’t exist!
+----------------------------
+```
+- **BuyTable.txt**: Information about purchased items and their sellers.
+```text
+Book doesn’t exist!
+Book GiGi 180
+Book Jacky01 200
+CD Mary 280
+```
+- **SortTable.txt**: Items sorted in ascending order.
+```text
+Book
+CD
+TV
+----------------------------
+Book
+TV
+----------------------------
+```
+- **LogTable.txt**: Statistics and reports about the simulation.
+```text
+insert 5
+search 3 1
+buy 4 1
+node_num 2
+height 2
+```
 
-![searchTable](./img/inp.png)
+## Conclusion
 
-# Output format example
+The Seller-Buyer Interaction Simulation demonstrates the use of __BST__ and __Min Heap__ data structures to model the interaction between sellers and buyers. Users can customize scenarios by providing input files with specific commands, and the program provides detailed information and reports based on these interactions.
 
-- <h2>Search table: </h2>
 
-    ![searchTable](./img/search-table.png)
 
-<br>
 
-- <h2>Buy table: </h2>
 
-    ![searchTable](./img/buy-table.png)
-
-<br>
-
-- <h2>Sort table:</h2>
-
-    ![searchTable](./img/sort-table.png)
-
-<br>
-
-- <h2>Log table:</h2>
-
-    ![searchTable](./img/log-table.png)
